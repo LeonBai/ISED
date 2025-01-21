@@ -2,6 +2,7 @@
 
 ### A official code hub for algorithm smoothness-enhanced embedding learning 
 ### 1. ISED (current)
+### 2. i-Rastermap(Upcoming)
 
 ## ISED (Information-based smoothness-enhanced embedding learning model) is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories.
 
@@ -18,10 +19,13 @@
 To use ISED, clone the repository and ensure that the required dependencies are installed. Dependencies include NumPy, SciPy, Scikit-learn, and Matplotlib, among others.
 
 ```sh
-# Clone this repository
+#(Prefered option) pip install
+pip install ISED
+
+## Clone this repository
 git clone https://github.com/LeonBai/ISED.git
 
-# Install required packages (Preferred way)
+## Install required packages
 pip install -r requirements.txt
 ```
 
@@ -34,9 +38,10 @@ pip install -r requirements.txt
 - scikit-learn >= 0.22.0
 - scikit-dimension >= 0.3.4
 - scikit-image >= 0.16.0
-- GPy >= 1.9.0
-- PHATE >= 1.0.0
-- tphate >= 0.1.0
+
+- GPy >= 1.9.0 (optional)
+- PHATE >= 1.0.0 (optional)
+- tphate >= 0.1.0 (optional)
 
 
 ## Notebook (`Test_run.ipynb`)
@@ -98,6 +103,9 @@ decoded_data =  preprocessing.MinMaxScaler().fit_transform(model.decode(encoded_
 ## License
 This project is licensed under the MIT License.
 see License.md
+
+## PyPI repository
+[https://pypi.org/project/ISED/0.1.0/]
 
 ## Author(s)
 - Wenjun Bai (wjbai@atr.jp) Advanced Telecommunication Research Institute International (ATR)
