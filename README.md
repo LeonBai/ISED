@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 ### Requirements
 - Python 3.6+
-- NumPy >= 1.18.0
+- NumPy >= 1.18.0 & < 2.2.0
 - TensorFlow >= 2.0.0
 - SciPy >= 1.4.0
 - scikit-learn >= 0.22.0
@@ -62,12 +62,12 @@ from ISED_learner import ISED
 from sklearn import preprocessing
 
 # Load simulation data file
-data_file = './ISED/data/Simulation_data/Xs.pkl'  ## Or your self-defined data path, currently accepting both .pkl and .npy files
+data_file = '../data/Simulation_data/Xs.pkl'  ## Or your self-defined data path, currently accepting both .pkl and .npy files
 
 # Preprocess data, normalization, and subsequencing with opted subsequence methods (choose from sliding window, buffering and appending methods)
 
 processor = ISED.DataProcessor(filepath=data_file, alpha=0.5)## alpha = 0, 0.5, 1 === [0,1,2]
-x_train, x_test, x = processor.load_and_preprocess_data(method = 'buffering')
+x_train, x_test, x = processor.load_and_preprocess_data(method = 'buffering') ## Number of ways to attain subsequences 
 
 # Instanitate ISED model
 model = ISED.ISEDModel(
@@ -81,7 +81,7 @@ model = ISED.ISEDModel(
     decoder_layers=[(latent_dim, 'relu'), (30, 'relu')],
     optimizer='adam',
     use_early_stopping=True,
-    loss_weight = None, ## ISED-sublearner choice
+    loss_weight = None, ## ISED-sublearner choice 
     verbose = 0   ### tensorflow and keras print-out options: set to 1 or 2 for full results printout during training
 )
 # Train ISEDModel on train data
