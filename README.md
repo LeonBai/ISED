@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ### Requirements
 - Python 3.6+
 - NumPy >= 1.18.0 & < 2.2.0
-- TensorFlow >= 2.0.0
+- TensorFlow >= 2.0.0 <=2.13.0 ## This is essential for not getting .shape issue in later model training 
 - SciPy >= 1.4.0
 - scikit-learn >= 0.22.0
 - scikit-dimension >= 0.3.4
@@ -58,6 +58,7 @@ The notebook `Test_run.ipynb` provides a structured example to test the ISED mod
 Below is a simple code snippet demonstrating how to use the ISED model with pre-processing method:
 
 ```python
+import numpy as np
 from ISED_learner import ISED
 from sklearn import preprocessing
 
