@@ -2,7 +2,7 @@
 
 ### A official code hub for algorithm smoothness-enhanced embedding learning 
 ### 1. ISED (current)
-### 2. i-Rastermap(Upcoming)
+### 2. Structure-aware neural analysis {Viz/E/D}(Upcoming)
 
 ## ISED (Information-based smoothness-enhanced embedding learning model) is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories.
 
