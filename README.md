@@ -1,12 +1,25 @@
-# ISED 
+# Smoothness-Enhanced Embedding Learning  
 
-### A official code hub for algorithm smoothness-enhanced embedding learning 
-### 1. ISED (current)
-### 2. Structure-aware neural analysis {Viz/E/D}(Upcoming)
+------------------------------------------------------------------------------------
+## A official code hub for algorithm smoothness-enhanced embedding learning 
+### 1. Intrinsic Smoothness-enhanced Embedding Learning (ISED)
+### 2. Structure-aware neural analysis {Viz/E/D} [TBA]
+------------------------------------------------------------------------------------
 
-## ISED (Information-based smoothness-enhanced embedding learning model) is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories.
+## ISED
 
-## Version: 0.1
+### Short Description: ISED (Intrinsic Smoothness-enhanced Embedding Learning Learner) is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories. It caters various of neural datasets: electrophysiological/MEG/EEG/MRI/calicum imaging data. 
+
+### Version: 0.2
+### Updates (0.1 -> 0.2)
++ Nicer print-out option for data preprocessing
++ More subsequence methods {buffering; sliding windoer, appending} with length determination k {self-defined or data-driven} available in data preprocessing in util.py
++ A new analysis + plotting script uploaded to replicate some of the key result plots in Fig.4 of main text.
++ Add post-hoc smoothing operation in util.py
++ Add plot.py for plotting the trajectory 
+- Remove the alternative approach from pip installable ISED package for less library-wise conflicts
+- Remove the main_analysis from pip installable ISED package for less library-wise conflicts
+  
 
 ## Features
 - **Smoothed Embedding Learning**: Implement ISED on high-dimensional neural dynamics to learn its smoothed low-dimnensional embeddings.
