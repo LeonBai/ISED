@@ -2,13 +2,15 @@
 
 ------------------------------------------------------------------------------------
 ## A official code hub for algorithm smoothness-enhanced embedding learning 
-### 1. Intrinsic Smoothness-enhanced Embedding Learning (ISED)
-### 2. Structure-aware neural analysis {Viz/E/D} [TBA]
+## Intrinsic Smoothness Embedding Dynamics (ISED) learning framework 
 ------------------------------------------------------------------------------------
 
-## [1] ISED
+## What is ISED ?
 
 ### Short Description: ISED (Intrinsic Smoothness Embedding Dynamics Learner) is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories. It caters various of neural datasets: electrophysiological/MEG/EEG/MRI/calicum imaging data. 
+
+
+## How to run ISED on high-dimensional dynamics ?
 
 ### Version: 0.2
 ### Updates (0.1 -> 0.2)
@@ -21,12 +23,13 @@
 - Remove the main_analysis from pip installable ISED package for less library-wise conflicts
   
 
-## Features
+### Features
 - **Smoothed Embedding Learning**: Implement ISED on high-dimensional neural dynamics to learn its smoothed low-dimnensional embeddings.
 - **Equipped with adaptable modelling choices**: Multiple options on data-driven/pre-determined $k$/$d$ and structures of embedding and projection functions.
 - **Demo Data Available** Simulation data and CA1 cell data from one mouse are available.
 
-## Installation
+
+### Installation
 
 To use ISED, clone the repository and ensure that the required dependencies are installed. Dependencies include NumPy, SciPy, Scikit-learn, and Matplotlib, among others.
 
@@ -45,7 +48,6 @@ pip install -r requirements.txt
 conda env create -f environment.yml
 ```
 
-
 ### Requirements
 - Python 3.6+
 - NumPy >= 1.25 < 2.0
@@ -60,15 +62,7 @@ conda env create -f environment.yml
 - tphate >= 0.1.0 (optional)
 
 
-## Notebook (`Test_running_synthetic.ipynb`)
-
-The notebook `Test_running_synthetic.ipynb` provides a structured example to test the ISED model workflow:
-- **Loading Data**: Simulation data is loaded, and a preprocessing method is applied.
-- **Determine Latent Dimension**: The latent dimension (`latent_dim`) is set for the analysis.
-- **Training and Evaluation**: Train the `ISED_learner.ISEDModel` and analyze the temporal smoothness of embedding dynamics.
-
-
-## Usage
+### Usage
 
 Below is a simple code snippet demonstrating how to use the ISED model with pre-processing data processor method:
 
@@ -134,6 +128,15 @@ encoded_data = preprocessing.MinMaxScaler().fit_transform(z_y) ## Learned trajec
 ```
 
 
+### Test Run Notebook (`Test_running_synthetic.ipynb`)
+
+The notebook `Test_running_synthetic.ipynb` provides a structured example to test the ISED model workflow:
+- **Loading Data**: Simulation data is loaded, and a preprocessing method is applied.
+- **Determine Latent Dimension**: The latent dimension (`latent_dim`) is set for the analysis.
+- **Training and Evaluation**: Train the `ISED_learner.ISEDModel` and analyze the temporal smoothness of embedding dynamics.
+
+
+
 ## License
 This project is licensed under the MIT License.
 see License.md
@@ -142,8 +145,8 @@ see License.md
 [https://pypi.org/project/ISED/0.2.0/]
 
 ## Author(s)
-- Wenjun Bai (wjbai@atr.jp) Advanced Telecommunication Research Institute International (ATR)
-
+- WJ. B (wjbai@atr.jp) Advanced Telecommunication Research Institute International (ATR)
+- 
   
 ## Contributing
 Contributions are welcome! Please submit a pull request or file an issue to help improve ISED.
