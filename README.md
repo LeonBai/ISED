@@ -60,7 +60,7 @@ conda env create -f environment.yml
 - tphate >= 0.1.0 (optional)
 
 
-## Notebook (`Test_run.ipynb`)
+## Notebook (`Test_running_synthetic.ipynb`)
 
 The notebook `Test_running_synthetic.ipynb` provides a structured example to test the ISED model workflow:
 - **Loading Data**: Simulation data is loaded, and a preprocessing method is applied.
