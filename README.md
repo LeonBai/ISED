@@ -1,151 +1,131 @@
-# ISED: Intrinsic Smoothness Embedding Dynamics Learning Framework
+# ISED: Intrinsic Smooth Embedding Learning Framework 
 
-------------------------------------------------------------------------------------
-## A official code hub for algorithm smoothness-enhanced embedding learning 
-------------------------------------------------------------------------------------
+ISED is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories.
 
-## What is ISED ?
+## Version update
 
-### Short Description: ISED (Intrinsic Smoothness Embedding Dynamics Learner) is a Python library that provides temporal smoothness embedding learning through a unique approach for dimensionality reduction of high-dimensional dynamical systems in order to attain smoothned trajectories. It caters various of neural datasets: electrophysiological/MEG/EEG/MRI/calicum imaging data. 
+### v0.1.0 --> 0.2.0 
 
-## How to run ISED on high-dimensional dynamics ?
+## Features
 
-### Version: 0.22
-### Updates (0.1 -> 0.22)
-+ Nicer print-out option for data preprocessing to determine subsequence length k and latent dimensionality d
-+ More subsequence methods {buffering; sliding windoer, appending} with length determination k {self-defined or data-driven} available in data preprocessing in util.py
-+ A new analysis + plotting script uploaded to replicate some of the key result plots in Fig.4 of main text. (see Analysis folder here)
-+ Add post-hoc smoothing operation in util.py
-+ Add plot.py for plotting the trajectory 
-- Remove the alternative approach from pip installable ISED package for less library-wise conflicts
-- Remove the main_analysis from pip installable ISED package for less library-wise conflicts
-  
-
-### Features
-- **Smoothed Embedding Learning**: Implement ISED on high-dimensional neural dynamics to learn its smoothed low-dimnensional embeddings.
-- **Equipped with adaptable modelling choices**: Multiple options on data-driven/pre-determined $k$/$d$ and structures of embedding and projection functions.
-- **Demo Data Available** Simulation data and CA1 cell data from one mouse are available.
+- **Preprocess the high-dimensional time series for subsequences**: Includes the attainment of optimal subsequence length and dimensionality, we offer buffering/appending/sliding window approaches to make subsequences.
+- **Embedding learning (ISED core)**: Learn and transform unseen data into low-dimensional smooth trajectories. It requires both aligned time series and subsequences.
+- **(Optional) Post analysis**: We offer several optional post analyses ranging from the estimation of the temporal smoothness of learned embeddings to behvaior analysis for real neural datasets. 
 
 
-### Installation
+## Installation
 
-To use ISED, clone the repository and ensure that the required dependencies are installed. Dependencies include NumPy, SciPy, Scikit-learn, and Matplotlib, among others.
+To use ISED, you can either clone the repository or simply running $pip install ISED$ and ensure that the required dependencies are installed. Dependencies include NumPy, SciPy, Scikit-learn, and Matplotlib, among others.
 
 ```sh
-# Create virtual env for smooth running
-conda 
+# Create a virtual env (currently on python 3.9) for running ISED code
+conda create -n ISED_running python=3.9
 
-#(Prefered option) pip install
-pip install ISED
+# (Recommanded Option) Pypi install, note if you have old version installed (v0.1) please uninstall and reinstall v=0.2 
+pip install ISED 
 
-# Manual installation 
-## Clone this repository
-git clone https://github.com/LeonBai/ISED.git
+# Or clone this repository
+git clone https://github.com/LeonBai/ISED_learner.git
 
-## Install required packages
+# Then Install required packages
 pip install -r requirements.txt
-
-## Or using Conda
-conda env create -f environment.yml
 ```
 
+
 ### Requirements
-- Python 3.6+ (tested on Python 3.8/3.9)
-- NumPy >= 1.25 < 2.0
-- TensorFlow >= 2.0.0 <=2.13.0 ## This is essential for not getting .shape issue in later model training 
+- Python 3.6+
+- NumPy >= 1.18.0
+- TensorFlow >= 2.0.0
 - SciPy >= 1.4.0
 - scikit-learn >= 0.22.0
 - scikit-dimension >= 0.3.4
 - scikit-image >= 0.16.0
-
-- GPy >= 1.9.0 (optional)
-
+- GPy >= 1.9.0
 
 
-### Usage
+## Notebook (`Test_run.ipynb`)
 
-Below is a simple code snippet demonstrating how to use the ISED model with pre-processing data processor method:
+The notebook `Test_run.ipynb` provides a structured example to test the ISED model workflow:
+- **Loading Functions**: Import all relevant functions from the `ISED.py` script.
+- **Loading Data**: Simulation data is loaded, and a preprocessing method is applied.
+- **Determine Latent Dimension**: The latent dimension (`latent_dim`) is set for the analysis.
+- **Training and Evaluation**: Train the `ISEDModel` and analyze the embedding and decoded dynamics.
+
+
+## Usage
+
+Below is a simple code snippet demonstrating how to use the ISED model with pre-processing method:
 
 ```python
-import numpy as np
-from ISED import utils
-from ISED import ISED_learner
+from ISED_learner import ISED
 from sklearn import preprocessing
 
 # Load simulation data file
-data_file = './data/Simulation_data/Xs.pkl'  ## Or your self-defined data path, currently accepting both .pkl and .npy files. Format [timesteps, feature]
+data_file = './ISED/data/Simulation_data/Xs.pkl'  ## Or your self-defined data path, currently accepting both .pkl and .npy files
 
 # Preprocess data, normalization, and subsequencing with opted subsequence methods (choose from sliding window, buffering and appending methods)
-
-## New in v0.2, now we can
+## New in 0.2.0 version 
 
 dp = utils.DataProcessor(
         data_source=data_file,
         alpha=1,
         method='buffering',
-        window_length=None
+        window_length=None,
     )
 X_train, X_test, X_norm = dp.process(
     length_mode='quarter',
-    x_norm_type='standard',
+    x_norm_type='standard', 
     id_method=None
 )
 
-# Instanitate ISED model
-from ISED import ISED_learner
-
-latent_dim = 10   ## Self-defined 'd' in main text
+latent_dim = 2
 
 model = ISED_learner.ISEDModel(
-    input_dim=X_train.shape[-1],   ## 'D' in main text
-    seq_length=X_train.shape[1],   ## Self-defined or derived 'k' in main  text
-    latent_dim=latent_dim,    
+    input_dim=X_train.shape[-1],
+    seq_length=X_train.shape[1],
+    latent_dim=latent_dim,
     batch_size=50,
-    epochs=300,    
-    encoder_layers=[(50, 'relu'), (latent_dim, 'relu')], ## Embedding function 'f_emb' in main text
-    rnn_layers=[(20, 'gru'), (latent_dim, 'gru')],       ## Projection funtion  'f_pro' in main text
-    decoder_layers=[(latent_dim, 'relu'), (30, 'relu')], ## Decoding function  'g' in main text
+    epochs=500,    # each .fit() runs this many epochs
+    encoder_layers=[(50, 'relu'), (latent_dim, 'relu')],
+    rnn_layers=[(20, 'gru'), (latent_dim, 'gru')],
+    decoder_layers=[(latent_dim, 'relu'), (30, 'relu')],
     optimizer='adam',
     use_early_stopping=True,
     loss_weights={
-        'MI_loss': 1.0,    #
-        'GSM_loss': 1.0,   #  Set = 0 if you donot need global smoothness loss
-        'LSM_loss': 1.0,   #  Set = 0 if you donot need local smoothness loss 
-     },
-    verbose=2
+        'MI_loss': 1.0,
+        'GSM_loss': 1.0,
+        'LSM_loss': 1.0,
+        'time_loss': 0.0, ### This part loss is not included in manuscript. Can set to 1 for extra embedding performance up, 
+    },
+    verbose=0
 ) 
 
 # Train ISEDModel on train data
 
-model.fit(x_train,x[:500])
+model.fit(X_train[:500],X_norm[:500])
+
 
 # Attain trajectories on test data
-## Keep this identical length to all embedding learning methods
 length = 320
 
-z_y = model.transform(x_test[:length])
+from sklearn import preprocessing
+from sklearn.decomposition import PCA
 
-encoded_data = preprocessing.MinMaxScaler().fit_transform(z_y) ## (Optional) normalized the learned trajectories in [0,1] range. 
-
+z_y = model.transform(X_test[:352])
+encoded_data =  preprocessing.MinMaxScaler().fit_transform(z_y)
 ```
 
-### Test Run Notebook (`test.py`)
+## Additonal Analyses 
 
-The test.py simple snipeet can be downloaded. It contains a simple ISED running on one type of synthetic data. 
-
+Additional analyses for learned embeddings can be found in (https://github.com/LeonBai/ISED/tree/main).
 
 ## License
 This project is licensed under the MIT License.
-see License.md
 
-## PyPI repository
-[[https://pypi.org/project/ISED/0.2.0/](https://pypi.org/project/ISED/)]
+## Author
+- Wenjun Bai (wjbai@atr.jp)
 
-## Author(s)
+For more details, please visit the [GitHub Repository](https://github.com/LeonBai/ISED).
 
-- WJ. B (wjbai@atr.jp) Advanced Telecommunication Research Institute International (ATR)
-  
 ## Contributing
-Contributions are welcome! 
-Please submit a pull request or file an issue to help improve ISED.
-
+Contributions are welcome! Please submit a pull request or file an issue to help improve ISED.
